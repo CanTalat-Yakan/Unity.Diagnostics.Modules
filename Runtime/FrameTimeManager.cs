@@ -16,14 +16,12 @@ namespace Unity.Essentials
         [SerializeField] private Vector2 _graphSizePercentage = new(50, 10);
         [SerializeField] private Vector2 _bottomLeftPivotPercentage = new(0, 10);
 
-        [Space]
-        [SerializeField] private KeyCode _modifierKey = KeyCode.LeftShift;
-        [SerializeField] private KeyCode _toggleKey = KeyCode.F3;
 
         public bool DisplayStatistics;
         public int TargetRefreshRate;
-        public Vector2 GraphSize;
-        public Vector2 BottomLeftPivot;
+        
+        [HideInInspector] public Vector2 GraphSize;
+        [HideInInspector] public Vector2 BottomLeftPivot;
 
 #if UNITY_EDITOR
         public void OnValidate()
@@ -36,11 +34,6 @@ namespace Unity.Essentials
         public void Update()
         {
             DisplayStatistics = _displayStatistics;
-
-            if (Input.GetKeyDown(_toggleKey))
-                if (_displayStatistics || Input.GetKey(_modifierKey))
-                    _displayStatistics = !_displayStatistics;
-
 
             // Handle refresh rate changes
             if (TargetRefreshRate != (int)Screen.currentResolution.refreshRateRatio.value)
