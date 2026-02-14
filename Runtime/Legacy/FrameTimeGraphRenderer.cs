@@ -2,11 +2,11 @@ using UnityEngine;
 
 namespace Unity.Essentials
 {
-    [RequireComponent(typeof(FrameTimeMonitor))]
-    public class FrameTimeGraphRenderer : MonoBehaviour
+    [RequireComponent(typeof(LegacyFrameTimeMonitor))]
+    public class LegacyFrameTimeGraphRenderer : MonoBehaviour
     {
-        [SerializeField] private FrameTimeManager _manager;
-        [SerializeField] private FrameTimeMonitor _monitor;
+        [SerializeField] private LegacyFrameTimeManager _manager;
+        [SerializeField] private LegacyFrameTimeMonitor _monitor;
 
         private Material _graphMaterial;
         private const float MaxFrameTime = 1000f; // 1 FPS
@@ -48,7 +48,7 @@ namespace Unity.Essentials
             var history = _monitor.FrameHistory;
             for (int i = 0; i < history.Count; i++)
             {
-                FrameTimeMonitor.FrameData frame = history[i];
+                LegacyFrameTimeMonitor.FrameData frame = history[i];
                 // Align to pixel grid and make each bar 1 pixel wide
                 float xPos = Mathf.Round(baseX + i);
 

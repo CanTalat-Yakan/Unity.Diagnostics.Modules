@@ -106,7 +106,7 @@ namespace UnityEssentials
                 return;
             }
 
-            // Measure render time using the same approach as FrameTimeMonitor: restart late-ish, stop at endCameraRendering.
+            // Measure render time using the same approach as LegacyFrameTimeMonitor: restart late-ish, stop at endCameraRendering.
             if (_trackRender)
                 _renderTimer.Restart();
 

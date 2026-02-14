@@ -6,9 +6,9 @@ using UnityEngine;
 
 namespace Unity.Essentials
 {
-    public class FrameTimeMonitor : MonoBehaviour
+    public class LegacyFrameTimeMonitor : MonoBehaviour
     {
-        [SerializeField] private FrameTimeManager _manager;
+        [SerializeField] private LegacyFrameTimeManager _manager;
 
         public IReadOnlyList<FrameData> FrameHistory => _frameHistory;
         private readonly List<FrameData> _frameHistory = new();

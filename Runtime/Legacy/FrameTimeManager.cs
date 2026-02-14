@@ -3,11 +3,11 @@ using UnityEngine.Rendering;
 
 namespace Unity.Essentials
 {
-    public class FrameTimeManager : MonoBehaviour
+    public class LegacyFrameTimeManager : MonoBehaviour
     {
-        [SerializeField] private FrameTimeMonitor _monitor;
-        [SerializeField] private FrameTimeGraphRenderer _graphRenderer;
-        [SerializeField] private FrameTimeGUI _gui;
+        [SerializeField] private LegacyFrameTimeMonitor _monitor;
+        [SerializeField] private LegacyFrameTimeGraphRenderer _graphRenderer;
+        [SerializeField] private LegacyFrameTimeGUI _gui;
 
         [Space]
         [Header("Display Settings")]
@@ -43,13 +43,13 @@ namespace Unity.Essentials
         public void Awake()
         {
             if (_monitor == null)
-                _monitor = GetComponent<FrameTimeMonitor>();
+                _monitor = GetComponent<LegacyFrameTimeMonitor>();
 
             if (_graphRenderer == null)
-                _graphRenderer = GetComponent<FrameTimeGraphRenderer>();
+                _graphRenderer = GetComponent<LegacyFrameTimeGraphRenderer>();
 
             if (_gui == null)
-                _gui = GetComponent<FrameTimeGUI>();
+                _gui = GetComponent<LegacyFrameTimeGUI>();
 
             RenderPipelineManager.endCameraRendering += OnEndCameraRendering;
         }

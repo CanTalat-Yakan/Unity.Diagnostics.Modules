@@ -2,11 +2,11 @@
 
 namespace Unity.Essentials
 {
-    [RequireComponent(typeof(FrameTimeMonitor))]
-    public class FrameTimeGUI : MonoBehaviour
+    [RequireComponent(typeof(LegacyFrameTimeMonitor))]
+    public class LegacyFrameTimeGUI : MonoBehaviour
     {
-        [SerializeField] private FrameTimeManager _manager;
-        [SerializeField] private FrameTimeMonitor _monitor;
+        [SerializeField] private LegacyFrameTimeManager _manager;
+        [SerializeField] private LegacyFrameTimeMonitor _monitor;
 
         [Space]
         [SerializeField] private Font _customFont;
