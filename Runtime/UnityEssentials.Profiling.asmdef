@@ -3,7 +3,8 @@
     "rootNamespace": "UnityEssentials",
     "references": [
         "GUID:da0828d7586ab2507a0fa4326b0cf982",
-        "GUID:31005776ba0ea9c4bb2ee78cca2f6886"
+        "GUID:31005776ba0ea9c4bb2ee78cca2f6886",
+        "GUID:9a6bb239ccccf6645b460348af49b773"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

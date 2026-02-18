@@ -112,6 +112,10 @@ namespace UnityEssentials
 
         private void DrawImGui()
         {
+            using var scope = ImGuiScope.TryEnter();
+            if (!scope.Active)
+                return;
+
             EnsureRecorders();
 
             if (!ImGui.Begin(_windowTitle))
