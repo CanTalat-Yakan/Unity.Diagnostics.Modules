@@ -31,11 +31,14 @@ namespace UnityEssentials
             public int Count;
         }
         
-        private void OnEnable() => EnsureHooked();
+        private void OnEnable() => 
+            EnsureHooked();
         
-        private void OnDisable() => Unhook();
+        private void OnDisable() => 
+            Unhook();
         
-        private void OnDestroy() => Unhook();
+        private void OnDestroy() => 
+            Unhook();
         
         private void Update()
         {
