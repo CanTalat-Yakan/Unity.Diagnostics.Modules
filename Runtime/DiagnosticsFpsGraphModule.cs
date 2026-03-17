@@ -15,6 +15,7 @@ namespace UnityEssentials
     {
         private const int BufferSize = 960;
         private const float MaxFrameTimeMs = 1000f; // 1 FPS
+        private const float WindowHeight = 104f;
 
         private float[] _buffer;
         private int _cursor;
@@ -47,6 +48,8 @@ namespace UnityEssentials
             _cursor = (_cursor + 1) % BufferSize;
             if (_count < BufferSize) _count++;
 
+            MonitoringImGui.BottomPadding += WindowHeight;
+
             DrawImGui();
         }
 
@@ -62,10 +65,8 @@ namespace UnityEssentials
             if (screenW <= 0 || screenH <= 0)
                 return;
 
-            float windowH = 80f + 24f;
-
-            ImGui.SetNextWindowPos(new Vector2(0, screenH - windowH), ImGuiCond.Always);
-            ImGui.SetNextWindowSize(new Vector2(screenW, windowH), ImGuiCond.Always);
+            ImGui.SetNextWindowPos(new Vector2(0, screenH - WindowHeight), ImGuiCond.Always);
+            ImGui.SetNextWindowSize(new Vector2(screenW, WindowHeight), ImGuiCond.Always);
             ImGui.SetNextWindowBgAlpha(0.25f);
 
             const ImGuiWindowFlags flags =
