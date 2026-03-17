@@ -13,11 +13,11 @@ namespace UnityEssentials
         [Monitor("GC Heap", Group = "GC")]
         private string MonitoredHeap => _heapText;
 
-        [MonitorGraph(Group = "Alloc", Min = 0, Max = 256)]
-        private MonitorGraphData MonitoredAllocGraph = new(240);
-
         [Monitor("GC Alloc", Group = "Alloc")]
         private string MonitoredAlloc => _allocText;
+
+        [MonitorGraph(Group = "Alloc", Min = 0, Max = 256)]
+        private MonitorGraphData MonitoredAllocGraph = new(240);
 
         private long _lastManagedBytes;
         private float _allocKbThisFrame;
