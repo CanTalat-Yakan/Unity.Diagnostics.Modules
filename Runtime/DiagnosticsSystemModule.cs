@@ -7,8 +7,6 @@ namespace UnityEssentials
     [MonitorDock(MonitorCorner.TopRight)]
     internal sealed class DiagnosticsSystemModule : MonoBehaviour
     {
-        [SerializeField] private bool _enabled = true;
-
         [Monitor("OS", Group = "System")]
         private string MonitoredOs => _os;
 
@@ -89,9 +87,6 @@ namespace UnityEssentials
 
         private void Update()
         {
-            if (!_enabled)
-                return;
-
             EnsureCached();
 
             if (Time.unscaledTime >= _nextMemRefresh)
@@ -144,7 +139,7 @@ namespace UnityEssentials
             _vram = SystemInfo.graphicsMemorySize.ToString("N0", CultureInfo.InvariantCulture) + " MB";
             _gpuMt = SystemInfo.graphicsMultiThreaded.ToString();
 
-            _battery = $"{SystemInfo.batteryLevel} ({SystemInfo.batteryStatus})";
+            _battery = $"{SystemInfo.batteryLevel * 100f:F0}% ({SystemInfo.batteryStatus})";
 
             try { _totalReservedRecorder = ProfilerRecorder.StartNew(ProfilerCategory.Memory, "Total Reserved Memory"); } catch { }
             try { _totalUsedRecorder = ProfilerRecorder.StartNew(ProfilerCategory.Memory, "Total Used Memory"); } catch { }

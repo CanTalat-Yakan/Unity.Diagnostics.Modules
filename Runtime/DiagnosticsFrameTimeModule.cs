@@ -7,13 +7,8 @@ namespace UnityEssentials
     [MonitorDock(MonitorCorner.TopLeft)]
     internal sealed class DiagnosticsFrameTimeModule : MonoBehaviour
     {
-        [SerializeField] private bool _enabled = true;
-
         [Monitor("FPS", Format = "0.0")]
         private float MonitoredFps => _fps;
-
-        [MonitorGraph(Group = "Frame", Min = 0, Max = 50)]
-        private MonitorGraphData MonitoredFrameMsGraph = new(240);
 
         [Monitor("Frame", Group = "Frame")]
         private string MonitoredFrameMs
@@ -25,11 +20,14 @@ namespace UnityEssentials
             }
         }
 
-        [MonitorGraph(Group = "Render", Min = 0, Max = 50)]
-        private MonitorGraphData MonitoredRenderMsGraph = new(240);
+        [MonitorGraph(Group = "Frame", Min = 0, Max = 50)]
+        private MonitorGraphData MonitoredFrameMsGraph = new(240);
 
         [Monitor("Render", Group = "Render")]
         private string MonitoredRenderMs => $"{_lastRenderMs:0.00} ms (avg {_avgRenderMs:0.00} ms)";
+
+        [MonitorGraph(Group = "Render", Min = 0, Max = 50)]
+        private MonitorGraphData MonitoredRenderMsGraph = new(240);
 
         [Monitor("Target FrameRate", Group = "Info")]
         private string MonitoredTargetFps =>
@@ -63,9 +61,6 @@ namespace UnityEssentials
 
         private void Update()
         {
-            if (!_enabled)
-                return;
-
             _renderTimer.Restart();
 
             var dt = Mathf.Max(0.000001f, Time.unscaledDeltaTime);

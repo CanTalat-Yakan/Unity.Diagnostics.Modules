@@ -7,19 +7,17 @@ namespace UnityEssentials
     [MonitorDock(MonitorCorner.BottomLeft)]
     internal sealed class DiagnosticsGcMemoryModule : MonoBehaviour
     {
-        [SerializeField] private bool _enabled = true;
-
         [Monitor("Managed", Group = "GC")]
         private string MonitoredManaged => _managedText;
 
         [Monitor("GC Heap", Group = "GC")]
         private string MonitoredHeap => _heapText;
 
-        [Monitor("GC Alloc", Group = "Alloc")]
-        private string MonitoredAlloc => _allocText;
-
         [MonitorGraph(Group = "Alloc", Min = 0, Max = 256)]
         private MonitorGraphData MonitoredAllocGraph = new(240);
+
+        [Monitor("GC Alloc", Group = "Alloc")]
+        private string MonitoredAlloc => _allocText;
 
         private long _lastManagedBytes;
         private float _allocKbThisFrame;
@@ -50,9 +48,6 @@ namespace UnityEssentials
 
         private void Update()
         {
-            if (!_enabled)
-                return;
-
             EnsureRecorders();
 
             var managedBytes = GC.GetTotalMemory(false);
