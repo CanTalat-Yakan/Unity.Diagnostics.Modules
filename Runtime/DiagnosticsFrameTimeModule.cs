@@ -8,7 +8,35 @@ namespace UnityEssentials
     internal sealed class DiagnosticsFrameTimeModule : MonoBehaviour
     {
         [SerializeField] private bool _enabled = true;
-        [SerializeField] private bool _trackRender = true;
+
+        [Monitor("FPS", Format = "0.0")]
+        private float MonitoredFps => _fps;
+
+        [MonitorGraph(Group = "Frame", Min = 0, Max = 50)]
+        private MonitorGraphData MonitoredFrameMsGraph = new(240);
+
+        [Monitor("Frame", Group = "Frame")]
+        private string MonitoredFrameMs
+        {
+            get
+            {
+                var ms = Mathf.Max(0.000001f, Time.unscaledDeltaTime) * 1000f;
+                return $"{ms:0.00} ms (avg {_avgFrameMs:0.00} ms)";
+            }
+        }
+
+        [MonitorGraph(Group = "Render", Min = 0, Max = 50)]
+        private MonitorGraphData MonitoredRenderMsGraph = new(240);
+
+        [Monitor("Render", Group = "Render")]
+        private string MonitoredRenderMs => $"{_lastRenderMs:0.00} ms (avg {_avgRenderMs:0.00} ms)";
+
+        [Monitor("Target FrameRate", Group = "Info")]
+        private string MonitoredTargetFps =>
+            Application.targetFrameRate > 0 ? Application.targetFrameRate.ToString() : "Unlimited";
+
+        [Monitor("VSync Count", Group = "Info")]
+        private int MonitoredVSyncCount => QualitySettings.vSyncCount;
 
         private float _fps;
         private float _avgFrameMs;
@@ -23,34 +51,6 @@ namespace UnityEssentials
 
         private bool _hooked;
 
-        [Monitor("FPS", Order = 0, Format = "0.0")]
-        private float MonitoredFps => _fps;
-
-        [Monitor("Frame", Order = 1)]
-        private string MonitoredFrameMs
-        {
-            get
-            {
-                var ms = Mathf.Max(0.000001f, Time.unscaledDeltaTime) * 1000f;
-                return $"{ms:0.00} ms (avg {_avgFrameMs:0.00} ms)";
-            }
-        }
-
-        [Monitor("Render", Order = 2)]
-        private string MonitoredRenderMs => $"{_lastRenderMs:0.00} ms (avg {_avgRenderMs:0.00} ms)";
-
-        [Monitor("Target FrameRate", Order = 3)]
-        private string MonitoredTargetFps =>
-            Application.targetFrameRate > 0 ? Application.targetFrameRate.ToString() : "Unlimited";
-
-        [Monitor("VSync Count", Order = 4)]
-        private int MonitoredVSyncCount => QualitySettings.vSyncCount;
-
-        [MonitorGraph(Order = 10, Min = 0, Max = 50, Height = 80)]
-        private MonitorGraphData MonitoredFrameMsGraph = new(240);
-
-        [MonitorGraph(Order = 11, Min = 0, Max = 50, Height = 80)]
-        private MonitorGraphData MonitoredRenderMsGraph = new(240);
         private void OnEnable()
         {
             ResetState();
@@ -66,8 +66,7 @@ namespace UnityEssentials
             if (!_enabled)
                 return;
 
-            if (_trackRender)
-                _renderTimer.Restart();
+            _renderTimer.Restart();
 
             var dt = Mathf.Max(0.000001f, Time.unscaledDeltaTime);
             var frameMs = dt * 1000f;
@@ -124,9 +123,6 @@ namespace UnityEssentials
 
         private void OnEndCameraRendering(ScriptableRenderContext context, Camera camera)
         {
-            if (!_trackRender)
-                return;
-
             if (camera == null || camera.cameraType != CameraType.Game)
                 return;
 
