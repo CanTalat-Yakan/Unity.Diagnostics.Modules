@@ -4,7 +4,7 @@ using UnityEngine.Rendering;
 
 namespace UnityEssentials
 {
-    [MonitorDock(MonitorCorner.TopLeft)]
+    [ToggleShortcut(ToggleKey.F3)]
     internal sealed class DiagnosticsFrameTimeModule : MonoBehaviour
     {
         [Monitor("FPS", Format = "0.0")]

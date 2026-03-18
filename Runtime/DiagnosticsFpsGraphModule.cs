@@ -1,4 +1,3 @@
-using System;
 using ImGuiNET;
 using UnityEngine;
 using Vector2 = System.Numerics.Vector2;
@@ -11,6 +10,7 @@ namespace UnityEssentials
     /// Logarithmically-scaled frame-time history with colored reference lines
     /// at the target, half, and quarter refresh rates.
     /// </summary>
+    [ToggleShortcut(ToggleKey.F3, ToggleModifiers.Shift)]
     internal sealed class DiagnosticsFpsGraphModule : MonoBehaviour
     {
         private const int BufferSize = 960;
@@ -67,7 +67,7 @@ namespace UnityEssentials
 
             ImGui.SetNextWindowPos(new Vector2(0, screenH - WindowHeight), ImGuiCond.Always);
             ImGui.SetNextWindowSize(new Vector2(screenW, WindowHeight), ImGuiCond.Always);
-            ImGui.SetNextWindowBgAlpha(0.25f);
+            ImGui.SetNextWindowBgAlpha(0f);
 
             const ImGuiWindowFlags flags =
                 ImGuiWindowFlags.NoDecoration |
@@ -76,6 +76,7 @@ namespace UnityEssentials
                 ImGuiWindowFlags.NoNav |
                 ImGuiWindowFlags.NoMove |
                 ImGuiWindowFlags.NoResize |
+                ImGuiWindowFlags.NoBackground |
                 ImGuiWindowFlags.NoInputs;
 
             if (!ImGui.Begin("##FpsGraph", flags))
@@ -95,7 +96,7 @@ namespace UnityEssentials
                 float plotW = ImGui.GetContentRegionAvail().X;
                 float plotH = 80f;
 
-                ImGui.PushStyleColor(ImGuiCol.FrameBg, new Vector4(0, 0, 0, 0.15f));
+                ImGui.PushStyleColor(ImGuiCol.FrameBg, new Vector4(0, 0, 0, 0));
                 ImGui.PushStyleColor(ImGuiCol.PlotLines, new Vector4(0.2f, 0.9f, 0.3f, 1f));
                 ImGui.PlotLines(" ", ref _plotScratch[0], n, 0, null,
                     0f, 1f, new Vector2(plotW, plotH));

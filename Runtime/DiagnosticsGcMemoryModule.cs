@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace UnityEssentials
 {
+    [ToggleShortcut(ToggleKey.F3)]
     [MonitorDock(MonitorCorner.BottomLeft)]
     internal sealed class DiagnosticsGcMemoryModule : MonoBehaviour
     {

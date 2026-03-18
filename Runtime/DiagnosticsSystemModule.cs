@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace UnityEssentials
 {
+    [ToggleShortcut(ToggleKey.F3)]
     [MonitorDock(MonitorCorner.TopRight)]
     internal sealed class DiagnosticsSystemModule : MonoBehaviour
     {
@@ -56,7 +57,7 @@ namespace UnityEssentials
         private string MonitoredSystemUsed => _systemUsedText;
 
         private bool _cached;
-        
+
         private string _os = "";
         private string _osFamily = "";
         private string _device = "";
